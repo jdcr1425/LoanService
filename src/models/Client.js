@@ -1,3 +1,4 @@
+const validator = require('validator');
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
@@ -11,7 +12,8 @@ let clientSchema = new Schema({
     },
     document: {
         type: String,
-        required: [true, 'The document is required']
+        required: [true, 'The document is required'],
+        unique:true
     },
     active: {
         type: Boolean,
@@ -19,7 +21,8 @@ let clientSchema = new Schema({
     },
     email: {
         type: String,
-        required: false
+        required: false,
+        validate: [validator.isEmail, 'Wrong Email'] 
     },
     adress: {
         type: String,
@@ -33,7 +36,7 @@ let clientSchema = new Schema({
 });
 
 
-clientSchema.plugin(uniqueValidator, {
+clientSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' },{
     message: '{PATH} should be unique'
 })
 
