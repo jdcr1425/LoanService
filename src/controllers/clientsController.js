@@ -5,8 +5,8 @@ const _ = require('underscore');
 
 clientsCtrl.index = async (req, res) => {
     try {
-        const clients = await clientModel.find({});
-        const numberOfClients = await clientModel.countDocuments({});
+        const clients = await clientModel.find({active:true});
+        const numberOfClients = await clientModel.countDocuments({active:true});
 
         return res.status(200).json({
             state: "ok",
@@ -43,8 +43,6 @@ clientsCtrl.oneClient = async (req, res) => {
 clientsCtrl.createClient = async (req, res) => {
     try {
 
-        //const { name, document, active, email, adress, telephone } = req.body;
-
         const newClient = new clientModel(req.body);
 
         const client = await newClient.save();
@@ -67,9 +65,9 @@ clientsCtrl.updateClient = async (req, res) => {
     try {
         let id = req.params.id;
 
-        let body = _.pick(req.body, ['name', 'email', 'document', 'active', 'adress', 'telephone']);
+        let body = _.pick(req.body, ['name', 'email', 'document', 'adress', 'telephone']);
 
-        const clientUpdate = await clientModel.findOneAndUpdate({_id:id}, body, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
+        const clientUpdate = await clientModel.findOneAndUpdate({ _id: id }, body, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
 
         return res.status(201).json({
             ok: "ok",
@@ -84,6 +82,28 @@ clientsCtrl.updateClient = async (req, res) => {
     }
 
 };
+
+clientsCtrl.deleteClient = async (req, res) => {
+    try {
+        let id = req.params.id;
+
+        const clientUpdate = await clientModel.findOneAndUpdate({ _id: id }, {active:false}, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
+
+        return res.status(201).json({
+            ok: "ok",
+            data: {
+                clientUpdate,
+            }
+        });
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ state: "error", error })
+    }
+
+};
+
+
 
 
 

@@ -16,7 +16,8 @@ app.set('port', process.env.PORT || 3000);
 app.use(cors());
 
 //Routes
-app.use(require("./routes"));
+require("./router")(app);
+
 
 
 
