@@ -7,7 +7,6 @@ let validLoanType = {
     message: '{VALUE} is not a valid loan type'
 }
 
-
 let Schema = mongoose.Schema;
 
 let LoanSchema = new Schema({
