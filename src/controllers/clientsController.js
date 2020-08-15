@@ -27,6 +27,9 @@ clientsCtrl.oneClient = async (req, res) => {
     try {
         let { id } = req.params
         const client = await clientModel.findOne({ _id: id });
+
+        if(!client) throw("User not found");
+
         return res.status(200).json({
             state: "ok",
             data: {
@@ -68,7 +71,7 @@ clientsCtrl.updateClient = async (req, res) => {
         let body = _.pick(req.body, ['name', 'email', 'document', 'adress', 'telephone']);
 
         const clientUpdate = await clientModel.findOneAndUpdate({ _id: id }, body, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
-
+        
         return res.status(201).json({
             ok: "ok",
             data: {

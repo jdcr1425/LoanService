@@ -37,7 +37,7 @@ let LoanSchema = new Schema({
         type: Boolean,
         default: true
     },
-    coSigner: {
+    IdCosigner: {
         type: Schema.Types.ObjectId,
         ref: "Client",
         required: false
