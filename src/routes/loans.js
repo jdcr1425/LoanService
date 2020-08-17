@@ -1,4 +1,4 @@
-const LoansController = require("../controllers/LoansController");
+const LoansController = require("../controllers/loans");
 
 //Clients routes
 module.exports = app => {

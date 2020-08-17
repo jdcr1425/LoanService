@@ -10,45 +10,44 @@ let validLoanType = {
 let Schema = mongoose.Schema;
 
 let LoanSchema = new Schema({
-    id_client: {
-        type: Schema.Types.ObjectId,
-        ref: "Client",
-        required: [true, 'The client is required']
-    },
-    amount: {
-        type: Decimal128,
-        required: [true, 'The amount is required']
-    },
-    fee: {
-        type: Decimal128,
-        required: [true, 'The fee is required'],
-    },
-    loanType: {
-        type: String,
-        default: 'DAILY',
-        enum: validLoanType,
-        required: true
-    },
-    interestPorcent: {
-        type: Number,
-        required: [true, 'The interest porcent is required']
-    },
-    active: {
-        type: Boolean,
-        default: true
-    },
-    IdCosigner: {
-        type: Schema.Types.ObjectId,
-        ref: "Client",
-        required: false
-    },
-    finishLoanDate: {
-        type: Date,
-        required: [true, 'The finish loan date is required']
-    }
+        id_client: {
+            type: Schema.Types.ObjectId,
+            ref: "Client",
+            required: [true, 'The client is required']
+        },
+        amount: {
+            type: Decimal128,
+            required: [true, 'The amount is required']
+        },
+        fee: {
+            type: Decimal128,
+            required: [true, 'The fee is required'],
+        },
+        loanType: {
+            type: String,
+            default: 'DAILY',
+            enum: validLoanType,
+            required: true
+        },
+        interestPercent: {
+            type: Number,
+            required: [true, 'The interest porcent is required']
+        },
+        active: {
+            type: Boolean,
+            default: true
+        },
+        IdCosigner: {
+            type: Schema.Types.ObjectId,
+            ref: "Client",
+            required: false
+        },
+        finishLoanDate: {
+            type: Date,
+            required: [true, 'The finish loan date is required']
+        }
 
-},
-    { timestamps: { createdAt: 'created_at' } }
+    }, { timestamps: { createdAt: 'created_at' } }
 
 );
 

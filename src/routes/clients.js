@@ -1,4 +1,4 @@
-const ClientController = require("../controllers/clientsController");
+const ClientController = require("../controllers/clients");
 
 //Clients routes
 module.exports = app => {
@@ -8,4 +8,3 @@ module.exports = app => {
     app.put("/clients/:id", ClientController.updateClient);
     app.delete("/clients/:id", ClientController.deleteClient);
 };
-

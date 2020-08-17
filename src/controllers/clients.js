@@ -3,10 +3,10 @@ const clientsCtrl = {};
 const _ = require('underscore');
 
 
-clientsCtrl.index = async (req, res) => {
+clientsCtrl.index = async(req, res) => {
     try {
-        const clients = await clientModel.find({active:true});
-        const numberOfClients = await clientModel.countDocuments({active:true});
+        const clients = await clientModel.find({ active: true });
+        const numberOfClients = await clientModel.countDocuments({ active: true });
 
         return res.status(200).json({
             state: "ok",
@@ -23,12 +23,12 @@ clientsCtrl.index = async (req, res) => {
 
 };
 
-clientsCtrl.oneClient = async (req, res) => {
+clientsCtrl.oneClient = async(req, res) => {
     try {
-        let { id } = req.params
+        let { id } = req.params;
         const client = await clientModel.findOne({ _id: id });
 
-        if(!client) throw("User not found");
+        if (!client) throw ("User not found");
 
         return res.status(200).json({
             state: "ok",
@@ -43,7 +43,7 @@ clientsCtrl.oneClient = async (req, res) => {
     }
 }
 
-clientsCtrl.createClient = async (req, res) => {
+clientsCtrl.createClient = async(req, res) => {
     try {
 
         const newClient = new clientModel(req.body);
@@ -64,14 +64,14 @@ clientsCtrl.createClient = async (req, res) => {
 
 };
 
-clientsCtrl.updateClient = async (req, res) => {
+clientsCtrl.updateClient = async(req, res) => {
     try {
         let id = req.params.id;
 
         let body = _.pick(req.body, ['name', 'email', 'document', 'adress', 'telephone']);
 
         const clientUpdate = await clientModel.findOneAndUpdate({ _id: id }, body, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
-        
+
         return res.status(201).json({
             ok: "ok",
             data: {
@@ -86,11 +86,11 @@ clientsCtrl.updateClient = async (req, res) => {
 
 };
 
-clientsCtrl.deleteClient = async (req, res) => {
+clientsCtrl.deleteClient = async(req, res) => {
     try {
         let id = req.params.id;
 
-        const clientUpdate = await clientModel.findOneAndUpdate({ _id: id }, {active:false}, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
+        const clientUpdate = await clientModel.findOneAndUpdate({ _id: id }, { active: false }, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
 
         return res.status(201).json({
             ok: "ok",
