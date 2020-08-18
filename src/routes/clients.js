@@ -7,4 +7,5 @@ module.exports = app => {
     app.post("/clients", ClientController.createClient);
     app.put("/clients/:id", ClientController.updateClient);
     app.delete("/clients/:id", ClientController.deleteClient);
+
 };

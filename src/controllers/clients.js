@@ -1,4 +1,6 @@
+const loanModel = require("../models/loan");
 const clientModel = require("../models/Client");
+
 const clientsCtrl = {};
 const _ = require('underscore');
 
@@ -25,7 +27,20 @@ clientsCtrl.index = async(req, res) => {
 
 clientsCtrl.oneClient = async(req, res) => {
     try {
-        let { id } = req.params;
+        const { id } = req.params;
+        const { hasLoans } = req.query;
+
+        //param hasLoans -> returns true if the client requested has an active loan
+        if (hasLoans) {
+            const hasAloan = await loanModel.findOne({ id_client: id, active: true });
+
+            if (hasAloan) {
+                return res.status(200).json({ state: "ok", hasActiveLoan: true })
+            } else {
+                return res.status(200).json({ state: "ok", hasActiveLoan: false })
+            }
+        }
+
         const client = await clientModel.findOne({ _id: id });
 
         if (!client) throw ("User not found");
@@ -66,9 +81,9 @@ clientsCtrl.createClient = async(req, res) => {
 
 clientsCtrl.updateClient = async(req, res) => {
     try {
-        let id = req.params.id;
+        const id = req.params.id;
 
-        let body = _.pick(req.body, ['name', 'email', 'document', 'adress', 'telephone']);
+        const body = _.pick(req.body, ['name', 'email', 'document', 'adress', 'telephone']);
 
         const clientUpdate = await clientModel.findOneAndUpdate({ _id: id }, body, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
 
@@ -88,7 +103,7 @@ clientsCtrl.updateClient = async(req, res) => {
 
 clientsCtrl.deleteClient = async(req, res) => {
     try {
-        let id = req.params.id;
+        const id = req.params.id;
 
         const clientUpdate = await clientModel.findOneAndUpdate({ _id: id }, { active: false }, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
 

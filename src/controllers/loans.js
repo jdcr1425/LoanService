@@ -22,6 +22,7 @@ LoansCtrl.index = async(req, res) => {
         return res.status(500).json({ state: "error", error })
     }
 
+
 }
 
 LoansCtrl.oneLoan = async(req, res) => {
@@ -64,7 +65,10 @@ LoansCtrl.createLoan = async(req, res) => {
 
         if (fee < minimunFeeAmount) throw (`The fee must be higher than ${minimunFeeAmount} COP`);
 
-        if (Number(interestPercent)) throw (`The interest percent must be a valid number`);
+        console.log(Number(interestPercent));
+
+        if (!Number(interestPercent)) throw (`The interest percent must be a valid number`);
+
 
         const newLoan = new LoanModel(req.body);
 
@@ -83,5 +87,19 @@ LoansCtrl.createLoan = async(req, res) => {
     }
 
 }
+
+LoansCtrl.deleteLoan = async(req, res) => {
+
+    try {
+        const { id } = req.params;
+        const deletedLoan = await LoanModel.findByIdAndUpdate({ _id: id }, { active: false }, { new: true, runValidators: true });
+        if (deletedLoan) {
+            return res.status(204).json({ state: "ok" });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ state: "error", error })
+    }
+};
 
 module.exports = LoansCtrl;
