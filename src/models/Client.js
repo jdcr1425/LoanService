@@ -13,7 +13,7 @@ let clientSchema = new Schema({
     document: {
         type: String,
         required: [true, 'The document is required'],
-        unique:true
+        unique: true
     },
     active: {
         type: Boolean,
@@ -22,7 +22,7 @@ let clientSchema = new Schema({
     email: {
         type: String,
         required: false,
-        validate: [validator.isEmail, 'Wrong Email'] 
+        validate: [validator.isEmail, 'Wrong Email']
     },
     adress: {
         type: String,
@@ -36,8 +36,8 @@ let clientSchema = new Schema({
 });
 
 
-clientSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' },{
+clientSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' }, {
     message: '{PATH} should be unique'
 })
 
-module.exports = mongoose.model('Client', clientSchema);
+module.exports = mongoose.models.Client || mongoose.model('Client', clientSchema);

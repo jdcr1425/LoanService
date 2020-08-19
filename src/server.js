@@ -1,4 +1,4 @@
-require('./config/enviroment');
+require('dotenv').config()
 
 const express = require("express");
 
@@ -13,7 +13,7 @@ const app = express();
 
 app.use(express.json())
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT);
 
 app.use(cors());
 
@@ -21,9 +21,6 @@ app.use(morgan("dev"));
 
 //Routes
 require("./router")(app);
-
-
-
 
 app.listen(app.get('port'), () => {
     console.log(`App running on port ${app.get("port")}`)
