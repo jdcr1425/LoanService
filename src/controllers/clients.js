@@ -25,14 +25,14 @@ clientsCtrl.index = async(req, res) => {
 
         } else {
             const clients = await clientsRepository.getClients({ active: true });
-            if (clients) {
-                return res.status(200).json({
-                    state: "ok",
-                    data: {
-                        clients
-                    }
-                });
-            }
+
+            return res.status(200).json({
+                state: "ok",
+                data: {
+                    clients
+                }
+            });
+
         }
     } catch (error) {
         console.log(error)

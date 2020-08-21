@@ -2,10 +2,7 @@ const validator = require('validator');
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-
-let Schema = mongoose.Schema;
-
-let clientSchema = new Schema({
+const clientSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'The name is required']
@@ -38,6 +35,6 @@ let clientSchema = new Schema({
 
 clientSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' }, {
     message: '{PATH} should be unique'
-})
+});
 
 module.exports = mongoose.models.Client || mongoose.model('Client', clientSchema);

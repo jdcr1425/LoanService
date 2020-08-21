@@ -22,12 +22,12 @@ const saveClient = ({...params }) => {
     return newClient.save();
 }
 
-const deleteClient = (id, filters, options) => {
-    return clientsModel.findOneAndUpdate({ _id: id }, filters, options)
+const deleteClient = (id, newdata, options) => {
+    return clientsModel.findOneAndUpdate({ _id: id }, newdata, options)
 }
 
-const updateClient = (id, filters, options) => {
-    return clientsModel.findOneAndUpdate({ _id: id }, filters, options)
+const updateClient = (id, newdata, options) => {
+    return clientsModel.findOneAndUpdate({ _id: id }, newdata, options)
 }
 
 
