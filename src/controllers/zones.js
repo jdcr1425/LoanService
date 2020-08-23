@@ -1,5 +1,6 @@
 const _ = require("underscore");
 const zoneRepository = require("../repository/zones");
+const loanModel = require("../models/loan");
 
 
 const index = async(req, res) => {
@@ -28,6 +29,7 @@ const index = async(req, res) => {
 const createZone = async(req, res) => {
     try {
         const createdZone = await zoneRepository.saveZone(req.body);
+
         if (createdZone) {
             return res.status(201).json({
                 state: "ok",
@@ -68,6 +70,10 @@ const updateZone = async(req, res) => {
 const deleteZone = async(req, res) => {
     try {
         const id = req.params.id;
+
+        const hasActiveloans = await loanModel.find({ id_zone: id, active: true })
+
+        if (hasActiveloans) throw ("You cannot delete this zone, there are some active loans")
 
         const zoneDeleted = await zoneRepository.deleteZone(id, { active: false }, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
 

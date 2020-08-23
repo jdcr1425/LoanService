@@ -15,6 +15,11 @@ let LoanSchema = new Schema({
             ref: "Client",
             required: [true, 'The client is required']
         },
+        id_zone: {
+            type: Schema.Types.ObjectId,
+            ref: "Zone",
+            required: [true, 'The zone is required']
+        },
         amount: {
             type: Decimal128,
             required: [true, 'The amount is required']

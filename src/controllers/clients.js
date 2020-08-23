@@ -84,6 +84,10 @@ clientsCtrl.deleteClient = async(req, res) => {
     try {
         const id = req.params.id;
 
+        const hasAnActiveLoan = await clientsRepository.hasALoan({ id_client: id, active: true });
+
+        if (hasAnActiveLoan) throw ("You cannot delete this client while he has an active loan");
+
         const clientDeleted = await clientsRepository.deleteClient(id, { active: false }, { new: true, runValidators: true, context: 'query', useFindAndModify: false })
 
         return res.status(201).json({

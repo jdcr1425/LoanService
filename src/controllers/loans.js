@@ -1,8 +1,11 @@
+const _ = require('underscore');
+
 const LoanModel = require("../models/Loan");
 const clientModel = require("../models/Client");
+const zoneModel = require("../models/zone");
 
 const LoansCtrl = {};
-const _ = require('underscore');
+
 
 LoansCtrl.index = async(req, res) => {
     try {
@@ -51,15 +54,19 @@ LoansCtrl.createLoan = async(req, res) => {
         const minimunLoanAmount = 50,
             minimunFeeAmount = 50;
 
-        const { id_client, IdCosigner, amount, fee, interestPercent } = req.body
+        const { id_client, id_cosigner, amount, fee, interestPercent, id_zone } = req.body
 
-        const client = clientModel.findById({ _id: id_client });
+        const client = await clientModel.findById({ _id: id_client });
 
         if (!client) throw ("Client does not exist");
 
-        const coSigner = clientModel.findById({ _id: IdCosigner });
+        const coSigner = await clientModel.findById({ _id: id_cosigner });
 
         if (!coSigner) throw ("Co-signer does not exist");
+
+        const zone = await zoneModel.findById({ _id: id_zone });
+
+        if (!zone) throw ("The zone does not exist");
 
         if (amount < minimunLoanAmount) throw (`The amount must be higher than ${minimunLoanAmount} COP`);
 
