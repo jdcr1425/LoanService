@@ -36,6 +36,7 @@ LoansCtrl.oneLoan = async(req, res) => {
 
         const loan = await loanRespository.getLoan({ _id: id });
 
+        if (!loan) res.status(404).json({ state: "error", msj: "The loan does not exist in the data base" })
 
         return res.status(200).json({
             state: "ok",
