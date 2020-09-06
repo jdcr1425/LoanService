@@ -4,6 +4,10 @@ const getZones = (filters) => {
     return zoneModel.find(filters);
 };
 
+const getZone = (filters) => {
+    return zoneModel.findOne(filters);
+};
+
 const getNumberOfZones = (filters) => {
     return zoneModel.countDocuments(filters);
 }
@@ -22,4 +26,4 @@ const deleteZone = (id, newdata, options) => {
     return zoneModel.findOneAndUpdate({ _id: id }, newdata, options);
 }
 
-module.exports = { getZones, saveZone, updateZone, deleteZone, getNumberOfZones };
+module.exports = { getZones, saveZone, updateZone, deleteZone, getNumberOfZones, getZone };
