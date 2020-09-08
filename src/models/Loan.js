@@ -47,12 +47,17 @@ let LoanSchema = new Schema({
             ref: "Client",
             required: false
         },
+        loanDate: {
+            type: Date,
+            required: [true, 'The finish loan date is required']
+        },
         finishLoanDate: {
             type: Date,
             required: [true, 'The finish loan date is required']
-        }
-
-    }, { timestamps: { createdAt: 'created_at' } }
+        },
+        interests: Decimal128,
+        balance: Decimal128
+    }
 
 );
 

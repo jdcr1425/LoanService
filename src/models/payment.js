@@ -8,10 +8,19 @@ const paymentSchema = new mongoose.Schema({
         ref: "Loan",
         required: [true, 'The id loan is required']
     },
+    capital_amount: {
+        type: Decimal128,
+        required: [true, 'The amount is required']
+    },
+    interest_amount: {
+        type: Decimal128,
+        required: [true, 'The amount is required']
+    },
     amount: {
         type: Decimal128,
         required: [true, 'The amount is required']
     }
+
 
 }, { timestamps: { createdAt: 'created_at' } });
 
